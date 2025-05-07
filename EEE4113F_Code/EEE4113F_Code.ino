@@ -25,7 +25,7 @@ U8G2_SSD1306_128X64_NONAME_F_4W_HW_SPI u8g2(U8G2_R0, CS, DC, RES); //constructor
 
 unsigned long lastSheetCheck = 0;
 unsigned long lastDisplayUpdate = 0;
-const unsigned long sheetInterval = 15000; // 15 seconds
+const unsigned long sheetInterval = 15000; 
 const unsigned long displayInterval = 1000;
 
 String captureTimestamps[3] = {"--", "--", "--"};  // fallback defaults
@@ -69,9 +69,14 @@ void writeScreen(const char* currentTime) {
   u8g2.drawFrame(0, 23, 100, 1);
   u8g2.drawFrame(100, 0, 1, 24);
 
-  u8g2.drawStr(0, 33, captureTimestamps[0].c_str());
-  u8g2.drawStr(0, 43, captureTimestamps[1].c_str());
-  u8g2.drawStr(0, 53, captureTimestamps[2].c_str());
+  char line1[32], line2[32], line3[32];
+  snprintf(line1, sizeof(line1), "1. %s", captureTimestamps[2].c_str());
+  snprintf(line2, sizeof(line2), "2. %s", captureTimestamps[1].c_str());
+  snprintf(line3, sizeof(line3), "3. %s", captureTimestamps[0].c_str());
+
+  u8g2.drawStr(0, 35, line1);
+  u8g2.drawStr(0, 45, line2);
+  u8g2.drawStr(0, 55, line3);
 }
 void sendToGoogleSheet(String timestamp) {
   HTTPClient http;
@@ -91,7 +96,6 @@ void sendToGoogleSheet(String timestamp) {
 
   http.end();
 }
-
 void readFromGoogleSheet() {
   HTTPClient http;
   http.setFollowRedirects(HTTPC_STRICT_FOLLOW_REDIRECTS);  // Important line
@@ -117,7 +121,6 @@ void readFromGoogleSheet() {
   }
   http.end();
 }
-
 void setup() {
   //Setup serial for debugging
   Serial.begin(115200);
@@ -150,7 +153,7 @@ void loop() {
     }
   }
 
-  // Check sheet every 30 seconds
+  // Check sheet every 15 seconds
   if (now - lastSheetCheck >= sheetInterval) {
     lastSheetCheck = now;
     readFromGoogleSheet();
