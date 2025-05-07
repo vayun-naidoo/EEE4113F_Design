@@ -10,10 +10,10 @@
 //const char* ssid = "VODAFONEB148";
 //const char* password = "3UQKAAAPT9KC3R6D";
 
-const char* ssid = "Vayun's iPhone";
-const char* password = "peepee123";
+const char* ssid = "DESKTOP-QJB68QR 3134";
+const char* password = "1{9H99s4";
 
-const char* scriptURL = "https://script.google.com/macros/s/AKfycbztGwmgpyflgIr0OTzBxXuH_DEog4HDRYrKnXoZwtqKxKAW2GiimhIV_I1CHVb0souE/exec";
+const char* scriptURL = "https://script.google.com/macros/s/AKfycbwil1MuIU0Xj2V5rJBMQx64NSohBkdznGxqrt04VPp9lV2vf7ML4d5337gh3deFFrSj/exec";
 
 #define D0 18     //D0 = Clock
 #define D1 23     //D1 = Data
@@ -40,7 +40,6 @@ void initialiseScreen() {
 void connectWifi() {
 
     WiFi.begin(ssid, password);
- 
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -63,7 +62,6 @@ void connectWifi() {
   }
 
 }
-
 void writeScreen(const char* currentTime) {
   u8g2.setFont(u8g2_font_5x8_tr);
   u8g2.drawStr(0, 12, currentTime);
@@ -75,7 +73,6 @@ void writeScreen(const char* currentTime) {
   u8g2.drawStr(0, 43, captureTimestamps[1].c_str());
   u8g2.drawStr(0, 53, captureTimestamps[2].c_str());
 }
-
 void sendToGoogleSheet(String timestamp) {
   HTTPClient http;
   http.setFollowRedirects(HTTPC_STRICT_FOLLOW_REDIRECTS);
